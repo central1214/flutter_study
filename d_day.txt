@@ -1,0 +1,39 @@
+yaml파일에서 -는 List란 뜻이다.
+weight는 100에구 900까지 설정 900으로 올라갈수록 두꺼운 글꼴
+야밀 파일에 폰트를 추가할 때는 fonts로 써서 asset 설정~
+
+Colors.pink[100~900] - 100~900으로 짙음 설정가능~
+
+---------Text를 가로 중간으로 오게하려면?
+//Container로 감싸준 후 MediaQuery.of(context).size.width 사용 == 외워라!!
+
+-- Container가 위 시간 칸까지 올라가 있으면?
+//widget으로 감싸준 후 SafeArea해줘라!
+
+----------------Text 스타일 설정
+// style: 이란 파라미터에 TextStyle 넣어줘야된다
+
+-------IconButton은 자체 크기를 바꾸도록 하자~
+
+-------column 들을 서로 비율 맞춰서 나누려면? Expanded widget을 사용하자
+
+-----column 코드가 너무 지저분해지면 ~
+// StatelessWidget을 하나 더 만들어 _ private으로, - 여기서만 쓰니까!
+
+----- SafeArea를 아래 쪽은 쓰기 싫으면? 
+// bottom: false
+
+--column 안에 column을 넣을 수 있다.
+
+------dialog----
+// 화면을 하나 더 띄우는 것
+
+----- dialog의 align을 따로 잡아주지 않으면 범위를 화면 전체로 한다
+// Align위젯으로 정렬할 기준을 잡아주자!
+
+----- barrierDismissible: true ( dialog 외의 곳을 탭하면 dialog 종료)
+
+----- Theme.of(context); 
+//위젯트리에서 가장 가까운 테마를 가져온다
+//MediaQuery.of 와 비슷~
+//of라는 생성자를 쓰는 클래스들 - inherited wiget
