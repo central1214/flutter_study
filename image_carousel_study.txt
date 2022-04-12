@@ -1,0 +1,35 @@
+BoxFit.covere - 굉장히 많이 쓰는 것 이미지를 위아래로 꽉 채워서 전체화면으로 보여줌
+
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: PageView(children: [
+        Image.asset('asset/image/image_1.jpg', fit: BoxFit.cover,),
+        Image.asset('asset/image/image_2.jpg', fit: BoxFit.cover),
+        Image.asset('asset/image/image_3.jpg', fit: BoxFit.cover),
+        Image.asset('asset/image/image_4.jpg', fit: BoxFit.cover),
+        Image.asset('asset/image/image_5.jpg', fit: BoxFit.cover),
+      ]),
+    );
+  }
+}
+
+//--------------------------위 코드를 매핑을 통해 더욱 깔끔하게~ 위와 아래의 결과는 같다.
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: PageView(
+        children: [1, 2, 3, 4, 5].map((e) => Image.asset('asset/image/image_$e.jpg', fit: BoxFit.cover,)).toList()
+      ),
+    );
+  }
+}
+
+controller.animateToPage -- 페이지 넘기는 컨트롤러 Curves 파라미터에 뭘 넣으면 뭐가 나오는지 구글에 치면 잘 나온당
+
+Timer 도 null일 수 있어서 ?를 붙이긴 하는데.. 정확히 감이 안온다.
+
+dispose는 정확히 언제 실행되는 건지 아직 잘 모르겠네
