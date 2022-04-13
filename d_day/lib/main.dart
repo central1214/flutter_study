@@ -5,7 +5,7 @@ void main() {
   runApp(MaterialApp(
     theme: ThemeData(
       fontFamily: 'sunflower',
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
       headline1: TextStyle(
         color: Colors.white,
         fontFamily: 'parisienne',
