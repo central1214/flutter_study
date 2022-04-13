@@ -1,0 +1,12 @@
+----- SizedBox
+//버튼의 크기를 조절하는 위젯
+
+-----primary: 주 색깔~
+
+// Random() -- 난수 생성클래스
+
+----- Navigator.of-----
+//push - > list - add와 같다
+//pop() - > 파라미터를 전달해주면서 Navigator 종료
+
+----- 변수 우클릭 > refactor 변수이름 한번 에 다 바꾸기~
