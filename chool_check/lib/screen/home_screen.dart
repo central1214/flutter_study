@@ -11,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   //latitude - 위도 , longitude - 경도
+  
   bool choolCheckDone = false;
   GoogleMapController? mapController;
   static final LatLng homeLatLng = LatLng(
@@ -20,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static final double okDistance = 100;
   static final CameraPosition initialPosition =
-  CameraPosition(target: homeLatLng, zoom: 15);
+      CameraPosition(target: homeLatLng, zoom: 15);
   static final Circle withinDistanceCircle = Circle(
       circleId: CircleId('withinDistanceCircle'),
       center: homeLatLng,
@@ -63,39 +64,21 @@ class _HomeScreenState extends State<HomeScreen> {
             return StreamBuilder<Position>(
                 stream: Geolocator.getPositionStream(),
                 builder: (context, snapshot) {
-                  bool isWithinRange = false;
-
-                  if (snapshot.hasData) {
-                    final start = snapshot.data!;
-                    final end = homeLatLng;
-                    final distance = Geolocator.distanceBetween(
-                      start.latitude,
-                      start.longitude,
-                      end.latitude,
-                      end.longitude,
-                    );
-                    if (distance < okDistance) {
-                      isWithinRange = true;
-                    }
-                    ;
-                  }
-                  ;
-
                   return Column(
                     children: [
                       _CustomGoogleMap(
                           onMapCreated: onMapCreated,
                           circle: choolCheckDone
                               ? checkDoneCircle
-                              : isWithinRange
-                              ? withinDistanceCircle
-                              : notWithinDistanceCircle,
+                              : checkDistance(snapshot)
+                                  ? withinDistanceCircle
+                                  : notWithinDistanceCircle,
                           initialPosition: initialPosition,
                           marker: marker),
                       _ChoolCheckBtn(
                         onPressed: onChoolCheckPressed,
                         choolCheckDone: choolCheckDone,
-                        isWithinRange: isWithinRange,
+                        isWithinRange: checkDistance(snapshot),
                       ),
                     ],
                   );
@@ -109,8 +92,34 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  bool checkDistance(AsyncSnapshot snapshot) {
+    bool isWithinRange = false;
+    if (snapshot.hasData) {
+      final start = snapshot.data!;
+      final end = homeLatLng;
+      final distance = Geolocator.distanceBetween(
+        start.latitude,
+        start.longitude,
+        end.latitude,
+        end.longitude,
+      );
+      if (distance < okDistance) {
+        isWithinRange = true;
+
+      }
+      ;
+    }
+    ;
+    return isWithinRange;
+  }
+  String name = '임정훈';
+
+
   onMapCreated(GoogleMapController controller) {
     mapController = controller;
+  }
+  functions(String names){
+    name = names;
   }
 
   onChoolCheckPressed() async {
@@ -193,11 +202,12 @@ class _CustomGoogleMap extends StatelessWidget {
   final Marker marker;
   final MapCreatedCallback onMapCreated;
 
-  const _CustomGoogleMap({required this.marker,
-    required this.circle,
-    required this.onMapCreated,
-    required this.initialPosition,
-    Key? key})
+  const _CustomGoogleMap(
+      {required this.marker,
+      required this.circle,
+      required this.onMapCreated,
+      required this.initialPosition,
+      Key? key})
       : super(key: key);
 
   @override
@@ -212,6 +222,7 @@ class _CustomGoogleMap extends StatelessWidget {
         circles: Set.from([circle]),
         markers: Set.from([marker]),
         onMapCreated: onMapCreated,
+
       ),
     );
   }
@@ -222,10 +233,11 @@ class _ChoolCheckBtn extends StatelessWidget {
   final VoidCallback onPressed;
   final bool choolCheckDone;
 
-  const _ChoolCheckBtn({required this.choolCheckDone,
-    required this.onPressed,
-    required this.isWithinRange,
-    Key? key})
+  const _ChoolCheckBtn(
+      {required this.choolCheckDone,
+      required this.onPressed,
+      required this.isWithinRange,
+      Key? key})
       : super(key: key);
 
   @override
@@ -240,8 +252,8 @@ class _ChoolCheckBtn extends StatelessWidget {
             color: choolCheckDone
                 ? Colors.green
                 : isWithinRange
-                ? Colors.blue
-                : Colors.red,
+                    ? Colors.blue
+                    : Colors.red,
           ),
           const SizedBox(
             height: 20,
