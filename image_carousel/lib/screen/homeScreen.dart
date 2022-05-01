@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: controller,
           children: [1, 2, 3, 4, 5]
               .map((e) =>
-                  Image.asset('asset/image/image_$e.jpg', fit: BoxFit.cover))
+                  Image.asset('assets/image/image_$e.jpg', fit: BoxFit.cover))
               .toList()),
     );
   }
